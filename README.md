@@ -8,4 +8,4 @@ Just copy the dependencies and dev-dependencies into your package.json file, and
 
 Ideally, you could just clone this repo into your project before commencing it, (re)initialze a git repo with `git init` and initialize the node project with `yarn init` or `npm init`
 
-**CURRENT STATUS: WORK IN PROGRESS**
+**CURRENT STATUS: NEARING FIRST RELEASE**
