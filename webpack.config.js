@@ -1,6 +1,9 @@
 const webpack = require('webpack');
-
+const process = require('process');
 const Merge = require('webpack-merge');
+
+const stylusAutoprefixer = require('autoprefixer-stylus');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const { join } = require('path');
 
@@ -35,4 +38,42 @@ commonConfig = {
   }
 };
 
-module.exports = commonConfig;
+const devConfig = {
+
+};
+
+const prodConfig = {
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true,
+      beautify: false,
+      comments: false,
+      compress: {
+        warnings: false,
+        drop_console: true,
+        screw_ie8: true
+      }
+    }),
+
+    new webpack.LoaderOptionsPlugin({
+      test: /\.styl$/,
+      stylus: {
+        default: {
+          use: [stylusAutoprefixer({ browsers: ['last 4 versions']})],
+        },
+      },
+    }),
+
+    new ExtractTextPlugin('style.css'),
+
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
+
+    new webpack.optimize.AggressiveMergingPlugin()
+  ]
+};
+
+module.exports = (process.env.NODE_ENV === 'development' ? Merge(commonConfig, devConfig) : Merge(commonConfig, prodConfig));
