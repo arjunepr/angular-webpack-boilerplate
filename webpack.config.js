@@ -32,9 +32,8 @@ commonConfig = {
 
   module: {
     rules: [
-      { test: /\.css$/, use: ['style-loader', 'css-loader'] },
       { test: /\.ts$/, use: ['ts-loader'] },
-      { test: /\.styl$/, use: ['style-loader', 'css-loader', 'stylus-loader'] },
+
     ]
   },
 
@@ -44,10 +43,49 @@ commonConfig = {
 };
 
 const devConfig = {
+  module: {
+    rules: [
+      { test: /\.css$/, use: ['style-loader', 'css-loader'] },
+      { test: /\.styl$/, use: ['style-loader', 'css-loader', 'stylus-loader'] },
+    ]
+  },
 
+  devServer: {
+    contentBase: join(__dirname, "dist"),
+    // publicPath: '/',
+    compress: true,
+    port: 8080,
+    historyApiFallback: true
+  },
+
+  entry: {
+    server: "webpack-dev-server/client?http://localhost:8080/"
+  },
 };
 
 const prodConfig = {
+  module: {
+    rules: [
+      {
+        test: /\.styl$/,
+        use: ExtractTextPlugin.extract({
+          fallback: { loader: 'style-loader' },
+
+          use: ['css-loader', 'stylus-loader']
+        })
+      },
+
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: { loader: 'style-loader' },
+
+          use: ['css-loader']
+        })
+      },
+    ]
+  },
+
   plugins: [
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
@@ -64,7 +102,7 @@ const prodConfig = {
       test: /\.styl$/,
       stylus: {
         default: {
-          use: [stylusAutoprefixer({ browsers: ['last 4 versions']})],
+          use: [stylusAutoprefixer({ browsers: ['last 4 versions'] })],
         },
       },
     }),
