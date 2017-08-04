@@ -5,5 +5,9 @@
   "main": "index.js",
   "repository": "git@github.com:arjunepr/angular-webpack-boilerplate.git",
   "author": "Arjun Raju Pillai <revarjunr@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^3.4.1",
+    "webpack-merge": "^4.1.0"
+  }
 }
