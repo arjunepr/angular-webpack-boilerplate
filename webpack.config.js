@@ -4,6 +4,7 @@ const Merge = require('webpack-merge');
 
 const stylusAutoprefixer = require('autoprefixer-stylus');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 
 const { join } = require('path');
 
@@ -35,7 +36,11 @@ commonConfig = {
       { test: /\.ts$/, use: ['ts-loader'] },
       { test: /\.styl$/, use: ['style-loader', 'css-loader', 'stylus-loader'] },
     ]
-  }
+  },
+
+  plugins: [
+    new FriendlyErrorsPlugin()
+  ]
 };
 
 const devConfig = {
