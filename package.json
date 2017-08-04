@@ -1,0 +1,9 @@
+{
+  "name": "angular-webpack-boilerplate",
+  "version": "0.0.1",
+  "description": "An Angular (2, 4, etc.) and webpack boilerplate.",
+  "main": "index.js",
+  "repository": "git@github.com:arjunepr/angular-webpack-boilerplate.git",
+  "author": "Arjun Raju Pillai <revarjunr@gmail.com>",
+  "license": "MIT"
+}
