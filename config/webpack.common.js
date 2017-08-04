@@ -53,6 +53,24 @@ commonConfig = {
       },
 
       {
+        test: /\.styl$/,
+        use: ExtractTextPlugin.extract({
+          fallback: { loader: 'style-loader' },
+
+          use: ['css-loader', 'stylus-loader']
+        })
+      },
+
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: { loader: 'style-loader' },
+
+          use: ['css-loader']
+        })
+      },
+
+      {
         test: /\.(gif|png|jpe?g|svg)$/i,
         use: [
           {

@@ -1,5 +1,11 @@
 const webpack = require('webpack');
 
+const { join } = require('path');
+
+const locTree = {
+  dist: join(__dirname, '..', 'dist')
+};
+
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const stylusAutoprefixer = require('autoprefixer-stylus');
 
@@ -28,7 +34,16 @@ const prodConfig = {
     ]
   },
 
+  output: {
+    path: locTree.dist,
+    publicPath: '/',
+    filename: '[name].[hash].js',
+    chunkFilename: '[id].[hash].chunk.js'
+  },
+
   plugins: [
+    new webpack.NoEmitOnErrorsPlugin(),
+    
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
       beautify: false,
@@ -37,6 +52,9 @@ const prodConfig = {
         warnings: false,
         drop_console: true,
         screw_ie8: true
+      },
+      mangle: {
+        keep_fnames: true
       }
     }),
 
@@ -49,11 +67,17 @@ const prodConfig = {
       },
     }),
 
-    new ExtractTextPlugin('style.css'),
+    new ExtractTextPlugin('[name].[hash].css'),
 
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production')
+      }
+    }),
+
+    new webpack.LoaderOptionsPlugin({
+      htmlLoader: {
+        minimize: false // workaround for ng2
       }
     }),
 
